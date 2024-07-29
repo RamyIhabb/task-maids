@@ -1,0 +1,44 @@
+<div class="container mt-4">
+    <div class="row mb-3 justify-content-center">
+        <div class="col-md-6">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search by ID" [(ngModel)]="searchTerm">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" (click)="onSearch()">
+                        <i class="fas fa-search"></i> Search
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="isLoading" class="text-center my-4">
+        <i class="fas fa-spinner fa-spin fa-3x"></i>
+        <p class="mt-2">Loading...</p>
+    </div>
+
+    <div *ngIf="!isLoading">
+        <div class="row hover">
+            <div class="col-md-4 mb-4 " *ngFor="let user of users">
+                <div class="card shadow-sm ">
+                    <img class="card-img-top" [src]="user.avatar" alt="{{ user.first_name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ user.first_name }} {{ user.last_name }}</h5>
+                        <button class="btn btn-primary" (click)="onUserClick(user.id)">
+                            <i class="fas fa-info-circle mr-2"></i>View Details
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between mt-4">
+        <button class="btn btn-secondary" (click)="page > 1 && (page = page - 1); fetchUsers()">
+            <i class="fas fa-chevron-left mr-2"></i>Previous
+        </button>
+        <button class="btn btn-secondary" (click)="page = page + 1; fetchUsers()">
+            Next<i class="fas fa-chevron-right ml-2"></i>
+        </button>
+    </div>
+</div>
